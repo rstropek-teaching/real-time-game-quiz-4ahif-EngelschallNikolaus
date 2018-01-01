@@ -1,10 +1,12 @@
 import * as express from 'express';
 import * as http from 'http';
 import * as sio from 'socket.io'
+import * as Datastore from 'nedb';
 
 //declaring the variables
 let waitingUsers: IUser[] = new Array();
 let playingUsers: IUser[] = new Array();
+const db = new Datastore({ filename: __dirname + 'highscore.dat', autoload: true });
 const app = express();
 app.use(express.static(__dirname));
 const server = http.createServer(app);
@@ -47,6 +49,30 @@ io.on('connection', function (socket) {
         playingUsers.splice(playingUsers.indexOf(user), 1);
       }
     });
+  });
+
+  //checks for new highscore and insert if new
+  socket.on('score', function (turn_count: number, user: IUser) {
+    let dbData = db.getAllData();
+    let connect_number_in = false;
+    if (dbData === null) {
+      db.insert({ username: user.name, connect_number: user.connect_number, turns: turn_count, date: new Date() });
+    } else {
+      dbData.forEach(function (data) {
+        if (data.connect_number === user.connect_number) {
+          if (turn_count < data.turns) {
+            db.remove(data);
+            db.insert({ username: user.name, connect_number: user.connect_number, turns: turn_count, date: new Date() });
+            console.log('new highscore');
+          }
+          connect_number_in=true;
+        }
+      });
+      if (!connect_number_in) {
+        db.insert({ username: user.name, connect_number: user.connect_number, turns: turn_count, date: new Date() });
+        console.log('new highscore');
+      }
+    }
   });
 
   //adds user when a user entered his username and connect_number

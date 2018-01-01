@@ -172,6 +172,7 @@ socket.on('won', function () {
   document.getElementById('game_header').innerHTML='';
   document.getElementById('game_info').innerHTML = 'Congratulations, ' + user.name + ', you have won!';
   document.body.style.backgroundColor = 'green';
+  socket.emit('score', turn_count, user);
 });
 
 //tells the user that he has lost the game
@@ -190,11 +191,13 @@ socket.on('draw', function () {
   document.body.style.backgroundColor = 'yellow'; 
 });
 
+//when the opponent is gone, tell the user
 socket.on('opponent_gone', function () {
   alert('Your opponent has left the game.');
   my_turn = false;
 });
 
+//tell the user to try his turn again
 socket.on('try_again', function(){
   my_turn=true;
 });

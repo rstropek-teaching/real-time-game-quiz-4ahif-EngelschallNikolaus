@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "copyfiles *.html dist/ && tsc",
+    "build": "copyfiles *.html dist/ && copyfiles -u 3 ./node_modules/jquery/dist/jquery.min.js dist/ && tsc",
     "start": "node ./dist/server.js"
   },
   "author": "",
@@ -12,12 +12,14 @@
   "devDependencies": {
     "@types/express": "^4.11.0",
     "@types/jquery": "^3.2.17",
+    "@types/nedb": "^1.8.5",
     "@types/socket.io": "^1.4.31"
   },
   "dependencies": {
     "copyfiles": "^1.2.0",
     "express": "^4.16.2",
     "jquery": "^3.2.1",
+    "nedb": "^1.8.0",
     "socket.io": "^2.0.4",
     "typescript": "^2.6.2"
   }
