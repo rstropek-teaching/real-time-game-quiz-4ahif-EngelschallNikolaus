@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connector</title>
+
+    <style>
+        td {
+            padding: 10px;
+        }
+
+        table {
+            background-color: blue;
+            border: 5px solid  rgb(26, 0, 143);
+        }
+
+         .user_login, .waiting_ground{
+            position: absolute;
+            left: 50%;
+            top: 30%;
+            -webkit-transform: translate(-50%, -30%);
+            transform: translate(-50%, -30%);
+            background-color:  rgb(53, 53, 226);
+            border: 20px solid  rgb(233, 15, 70);
+            color: rgb(169, 214, 255);
+            padding: 50px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- login-area -->
+    <div class="user_login" align="center">
+        <h1>Welcome to Connector</h1>
+        <h2>choose your game to play:</h2>
+        Please choose a username
+        <br>
+        <input type="text" id="username" />
+        <br>
+        <br>
+        How many discs do you want to connect?
+        <br>
+        <input type="number" id="connect_number" min="3" max="30" />
+        <br>
+        <br>
+    </div>
+
+    <!-- "waiting-for-another-player"-area -->
+    <div class="waiting_ground" align="center" style="display:none">
+        <h1 id="waiting_header"></h1>
+    </div>
+
+    <!-- game-area -->
+    <div class="game_ground" align="center" style="display:none">
+        <h1 id="game_header"></h1>
+        <h1 id="game_info"></h1>
+        <table id="game_field">
+
+        </table>
+    </div>
+    <!-- source imports -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery.min.js"></script>
+    <script src="/client.js"></script>
+</body>
+
+</html>
